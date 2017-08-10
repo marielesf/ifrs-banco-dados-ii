@@ -105,4 +105,18 @@ begin
     end if;
 end;
 ```
-
+#### Exercício 7
+```
+declare
+    v_nota1 number(02);
+    v_nota2 number(02);
+    v_nome varchar2(30);
+    v_texto varchar2(300);
+begin
+    v_nome := 'Yuri Lopes';
+    v_nota1 := '9';
+    v_nota2 := '7';
+    v_texto := 'O aluno ' || v_nome || ' tem a nota média de de : ' || (v_nota1+v_nota2)/2;
+    dbms_output.put_line(v_texto);
+end;
+```
