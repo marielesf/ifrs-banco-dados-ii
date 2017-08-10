@@ -80,4 +80,17 @@ begin
     insert into minha_log (dt_log, ds_log) values (SYSDATE, 'Eu ' || username || ' serei um excelente desenvolvedor PL/SQL ');
 end;
 ```
+#### Exercício 5
+```
+declare
+    value_1 number;
+    value_2 number;
+begin
+    value_1 := :value_1;
+    value_2 := :value_2;
+    insert into minha_log (dt_log, ds_log) values (SYSDATE, TO_CHAR(value_1/value_2));
+end;
+    
+```
+
 
