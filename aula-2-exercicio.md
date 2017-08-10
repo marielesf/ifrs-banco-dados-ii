@@ -92,5 +92,17 @@ begin
 end;
     
 ```
-
+#### Exercício 6
+```
+declare
+    dividendo number(1);
+    divisor number(1);
+begin
+    dividendo := :dividendo;
+    divisor := :divisor;
+    if (divisor > 0) then
+        insert into minha_log (dt_log, ds_log) values (SYSDATE, 'O valor da divisão é ' ||dividendo/divisor);
+    end if;
+end;
+```
 
