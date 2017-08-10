@@ -120,3 +120,7 @@ begin
     dbms_output.put_line(v_texto);
 end;
 ```
+#### Exercício 8
+```
+null != number
+```
