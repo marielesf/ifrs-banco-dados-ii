@@ -4,16 +4,10 @@
 ```
 declare
 	teste boolean;
-
 begin
-   
 	teste := true;
-   
 	if teste then
-      
-		dbms_output.put_line('maior que minimo');
-   
+		dbms_output.put_line('maior que minimo');   
 	end if;
-
 end;
 ```
