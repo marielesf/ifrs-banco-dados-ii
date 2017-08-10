@@ -124,3 +124,35 @@ end;
 ```
 null != number
 ```
+#### Exercício 9
+```
+declare
+    segunda number;
+    terca number;
+    quarta number;
+    quinta number;
+    sexta number;
+    sabado number;
+    domingo number;
+    media_semanal number;
+    cidade varchar2(50);
+    mensagem varchar2(500);
+begin
+    
+    cidade := :cidade;
+    segunda := :segunda;
+    terca := :terca;
+    quarta := :quarta;
+    quinta := :quinta;
+    sexta := :sexta;
+    sabado := :sabado;
+    domingo := :domingo;
+    
+    media_semanal := (segunda + terca + quarta + quinta + sexta + sabado + domingo ) / 7;
+    
+    mensagem := 'Na cidade ' || cidade || ' durante os ultimos 7 dias, a temperatura média registrada foi de ' || media_semanal || '°C';
+    insert into minha_log(dt_log, ds_log) values (SYSDATE, mensagem);
+    dbms_output.put_line(mensagem);
+    
+end;
+```
