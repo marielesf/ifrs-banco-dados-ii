@@ -14,7 +14,7 @@ end;
 ```
 
 #### Exercício 2
-```java
+```python
 declare
    value_1 number;
    value_2 number;
