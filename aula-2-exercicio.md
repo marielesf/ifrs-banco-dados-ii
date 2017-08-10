@@ -2,7 +2,7 @@
 PDF do exercicio - http://moodle.canoas.ifrs.edu.br/pluginfile.php/10987/mod_resource/content/3/Exerc%C3%ADcios%20de%20Fixa%C3%A7%C3%A3o_Bloco.pdf
 
 #### Exercício 1
-```sql
+```
 declare
    value_1 number;
    value_2 number;
@@ -14,7 +14,7 @@ end;
 ```
 
 #### Exercício 2
-```sql
+```
 declare
    value_1 number;
    value_2 number;
@@ -65,4 +65,10 @@ begin
         dbms_output.put_line('Menor: ' ||lowest_value);
 end;
 ```
-
+#### Exercício 3
+```
+create table MINHA_LOG (
+  DT_LOG DATE, 
+  DS_LOG VARCHAR2(4000)
+);
+```
