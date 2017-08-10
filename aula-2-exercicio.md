@@ -12,7 +12,6 @@ begin
    dbms_output.put_line(value_1 * value_2);
 end;
 ```
-
 #### Exercício 2
 ```
 declare
@@ -72,3 +71,13 @@ create table MINHA_LOG (
   DS_LOG VARCHAR2(4000)
 );
 ```
+#### Exercício 4
+```
+declare
+    username varchar2(90);
+begin
+    username := :username;
+    insert into minha_log (dt_log, ds_log) values (SYSDATE, 'Eu ' || username || ' serei um excelente desenvolvedor PL/SQL ');
+end;
+```
+
