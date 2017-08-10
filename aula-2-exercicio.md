@@ -2,7 +2,7 @@
 PDF do exercicio - http://moodle.canoas.ifrs.edu.br/pluginfile.php/10987/mod_resource/content/3/Exerc%C3%ADcios%20de%20Fixa%C3%A7%C3%A3o_Bloco.pdf
 
 #### Exercício 1
-```java
+```sql
 declare
    value_1 number;
    value_2 number;
@@ -14,7 +14,7 @@ end;
 ```
 
 #### Exercício 2
-```python
+```sql
 declare
    value_1 number;
    value_2 number;
