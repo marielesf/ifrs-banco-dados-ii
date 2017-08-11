@@ -32,7 +32,7 @@ end loop;
 #### Exemplo for
 ```
 for i in 1..10 loop
-    dbms_output.put_line('Contador:' || cont);
+    dbms_output.put_line('Contador:' || i);
 end loop;
 ```
 
