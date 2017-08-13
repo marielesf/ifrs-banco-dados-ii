@@ -3,6 +3,28 @@ PDF do exercicio - http://moodle.canoas.ifrs.edu.br/pluginfile.php/10987/mod_res
 
 #### Exercício 1
 ```
+/*
+1) Objetivo: bloco anônimo e tratamento de variáveis
+Elabore um  PL/SQL que solicite a entrada de 2 valores. (utilize a opção : para entrada dedados nas variáveis Ex.: v_num1 := :v_num1;). Faça e exiba a multiplicação desses valores
+(valor1 * valor2), bem como os 2 valores originais utilizados para realizar o cálculo. Utilize o pacote DBMS_OUTPUT.PUT_LINE para exibir o conteúdo. (Obs.: Para solicitar a leitura de um
+valor, utilize, por exemplo: v_numero := :v_numero – isso fará com que o SQLPLUS solicite queo valor seja digitado; não esqueça, também, que se utiliza o || para concatenar valores em uma
+string)
+*/
+
+declare
+numero1 number;
+numero2 number;
+begin
+
+numero1 := :numero1;
+numero2 := :numero2;
+
+dbms_output.put_line('valor 1: ' || numero1 );
+dbms_output.put_line('Valor 2: '|| numero2); 
+dbms_output.put_line('Multiplicacao: ' ||numero1 * numero2);
+
+end;
+----------------------------------
 declare
    value_1 number;
    value_2 number;
