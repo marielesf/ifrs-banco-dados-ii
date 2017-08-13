@@ -1,0 +1,63 @@
+h-
+select p.nome 
+from pecas p 
+inner join fornecem f on f.codpeca_pecas = p.codpeca
+inner join fornecedores fo on fo.codfor = f.codfor_fornecedores
+where qtde > 15 and
+fo.cidade = 'Canoas';
+
+i- 
+select distinct fo.nome, fo.cidade
+from fornecem f 
+inner join fornecedores fo on fo.codfor = f.codfor_fornecedores
+where qtde > 10 
+
+j-
+select fo.nome
+from fornecedores fo  
+left join fornecem f on fo.codfor = f.codfor_fornecedores
+where qtde is null or qtde = 0;
+
+k-
+select *
+from fornecedores fo  
+where fo.nome like 'M%';
+
+l-
+select *
+from pecas
+where peso is null;
+
+
+n-
+select fo.nome
+from fornecedores fo  
+inner join fornecem f on fo.codfor = f.codfor_fornecedores
+inner join pecas p on f.codpeca_pecas = p.codpeca
+where p.peso = (select max(peso) from pecas)
+
+o-
+select f.nome from fornecedores f 
+inner join fornecem on codfor_fornecedores = f.codfor
+group by codfor_fornecedores, f.nome
+having sum(qtde) = (select min(sum(qtde)) from fornecem group by codfor_fornecedores);
+
+S-
+select f.nome from fornecedores f 
+inner join fornecem on codfor_fornecedores = f.codfor
+group by codfor_fornecedores, f.nome
+having sum(qtde) < (select sum(coalesce (qtde, 0)) from fornecem 
+inner join fornecedores on codfor = codfor_fornecedores
+where nome = 'Mario Kart')
+
+t-
+SELECT count(distinct codpeca_pecas), codfor_fornecedores, fornecedores.nome FROM FORNECEM 
+inner join fornecedores on fornecedores.codfor = fornecem.codfor_fornecedores
+group by codfor_fornecedores, fornecedores.nome; 
+
+u-
+v-
+select sum(qtde),f.nome from fornecedores f 
+inner join fornecem on codfor_fornecedores = f.codfor
+group by codfor_fornecedores, f.nome
+having sum(qtde) > 10;
