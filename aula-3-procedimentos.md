@@ -26,5 +26,23 @@ end;
 ### Exercício 2
 
 ```
-...
+CREATE OR REPLACE PROCEDURE mes_nascimento_estacao
+    (codigo_empregado IN number)
+AS
+    mes_nascimento varchar2(20);
+    estacao varchar2(20);
+BEGIN
+    select TO_char(empregado.datanasc,'month')
+    into mes_nascimento
+    from empregado
+    where empregado.identemp = codigo_empregado;
+    
+    dbms_output.put_line(mes_nascimento);
+    
+END mes_nascimento_estacao;
+
+begin
+  mes_nascimento_estacao(1);
+end;
+
 ```
