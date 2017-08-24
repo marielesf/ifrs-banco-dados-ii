@@ -63,3 +63,57 @@ dados_projeto('Logica de Programacao');
 dbms_output.put_line('finalizado com sucesso');
 end;
 ```
+
+#### 1 - parte 2
+```
+
+select * from PROJETO;
+select * from empregado;
+select * from DEPARTAMENTO;
+
+create or replace procedure dados_projeto(nomeproj varchar2) as 
+var_PROJNUM projeto.ProjNum %type; 
+var_ProjNOMe projeto.nome%type; 
+var_DepNOME departamento.nome%type; 
+var_empNome empregado.nome%type;
+
+begin
+dbms_output.put_line('Projeto informado:  ' || nomeproj );
+
+select p.PROJNUM, p.NOME, d.NOME, e.Nome 
+into var_PROJNUM, var_ProjNOMe, var_DepNOME, var_empNome
+
+from projeto p, trabalhano t, empregado e, departamento d
+where p.nome = 'Banco de Dados' and 
+p.ProjNum = t.ProjNum and 
+t.IdentEmp = e.IdentEmp and 
+e.DepNum = d.DepNum and 
+e.DATANASC = (select min(e.DATANASC) 
+from projeto p, trabalhano t, empregado e
+where p.nome = nomeproj and 
+p.ProjNum = t.ProjNum and 
+t.IdentEmp = e.IdentEmp);
+
+dbms_output.put_line('Nome do projeto: ' || var_ProjNOMe);
+dbms_output.put_line('Código do projeto: ' || var_PROJNUM);
+dbms_output.put_line('Nome do departamento responsável: ' || var_DepNOME);
+dbms_output.put_line('Nome do empregado mais velho que trabalha no projeto: ' || var_empNome);
+
+exception
+when no_data_found then
+--dbms_output.put_line('Nome nao localizado');
+RAISE_APPLICATION_ERROR(-20005, 'errrrrrrrrrrrrrrrrrooooooooooooo');
+end;
+
+begin
+dados_projeto('fgfgfg');
+dbms_output.put_line('finalizado com sucesso');
+end;
+
+begin
+dados_projeto('Banco de Dados');
+dbms_output.put_line('finalizado com sucesso');
+end;
+```
+
+
