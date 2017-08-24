@@ -117,3 +117,53 @@ end;
 ```
 
 
+### Patricia
+Exercício 4
+```
+CREATE OR REPLACE PROCEDURE INSERE_TRABALHANO(NOMEE VARCHAR2, NOMEP VARCHAR2, HORAS NUMBER) AS
+ V_PROJ NUMBER;
+ V_EMP NUMBER;
+ empreg exception;
+ projet exception;
+ contae number;
+ contap number;
+BEGIN
+ 
+ SELECT count(*)
+ INTO contae
+ FROM EMPREGADO1
+ WHERE NOME = NOMEE;
+
+ if contae = 0 then
+  raise empreg;
+ end if; 
+
+ SELECT IDENTEMP
+ INTO V_EMP
+ FROM EMPREGADO1
+ WHERE NOME = NOMEE;
+
+ SELECT count(*)
+ INTO contap
+ FROM PROJETO
+ WHERE NOME = NOMEP; 
+
+ if contap = 0 then
+  raise projet;
+ end if;
+
+
+ SELECT PROJNUM
+ INTO V_PROJ
+ FROM PROJETO
+ WHERE NOME = NOMEP; 
+
+ INSERT INTO TRABALHANO VALUES(V_EMP, V_PROJ, HORAS);
+
+ exception
+   when empreg then
+     dbms_output.put_line('Não localizei o empregado');
+   when projet then
+     dbms_output.put_line('Não localizei o projeto');
+END; 
+```
