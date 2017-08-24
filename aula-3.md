@@ -108,5 +108,11 @@ var_emp := :var_emp;
   select count(IdentEmp)
   into sal_emp 
   from empregado  
-  where var_emp = IdentEmp and 
+  where sal > (select sal
+  from empregado
+  where IdentEmp = var_emp);
+
+dbms_output.put_line('qtde empregados com salario maior: ' || sal_emp);
+
+end;
 ```
