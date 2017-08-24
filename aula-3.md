@@ -96,3 +96,17 @@ begin
   dbms_output.put_line('fatorial_Idade:' || fatorial_Idade);
 end;
 ```
+#### Exercício 5
+//Buscar o salário de um determinado empregado (fornecido) e ver quantos empregados
+recebem mais do que ele. TERMINAR.
+```
+declare
+  var_emp empregado.IdentEmp%type;
+sal_emp int;
+begin
+var_emp := :var_emp;
+  select count(IdentEmp)
+  into sal_emp 
+  from empregado  
+  where var_emp = IdentEmp and 
+```
