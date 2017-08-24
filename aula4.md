@@ -70,6 +70,7 @@ end;
 select * from PROJETO;
 select * from empregado;
 select * from DEPARTAMENTO;
+select * from trabalhano;
 
 create or replace procedure dados_projeto(nomeproj varchar2) as 
 var_PROJNUM projeto.ProjNum %type; 
@@ -84,7 +85,7 @@ select p.PROJNUM, p.NOME, d.NOME, e.Nome
 into var_PROJNUM, var_ProjNOMe, var_DepNOME, var_empNome
 
 from projeto p, trabalhano t, empregado e, departamento d
-where p.nome = 'Banco de Dados' and 
+where p.nome = nomeproj  and 
 p.ProjNum = t.ProjNum and 
 t.IdentEmp = e.IdentEmp and 
 e.DepNum = d.DepNum and 
@@ -112,6 +113,11 @@ end;
 
 begin
 dados_projeto('Banco de Dados');
+dbms_output.put_line('finalizado com sucesso');
+end;
+
+begin
+dados_projeto('Logica de Programacao');
 dbms_output.put_line('finalizado com sucesso');
 end;
 ```
