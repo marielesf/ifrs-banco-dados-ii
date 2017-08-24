@@ -122,6 +122,46 @@ dbms_output.put_line('finalizado com sucesso');
 end;
 ```
 
+//Receba como parâmetro o nome de um departamento e retorne, na forma de um relatório:
+Código do Departamento: XXX
+Nome do Departamento: XXXXXXXXXX
+Nome do Gerente: XXXXXXX
+O Departamento XXXXXX possui XXX empregados lotados nele e XXX projetos sob sua
+responsabilidade
+
+select * from PROJETO;
+select * from empregado;
+select * from DEPARTAMENTO;
+select * from trabalhano;
+
+CREATE OR REPLACE PROCEDURE relatorio_departamento(nomedep VARCHAR2) AS
+ var_codDepartamento departamento.DEPNUM%type; ;
+ var_nomeDepartamento departamento.nome%type; 
+ var_nomeGerente departamento.IdentEmpGer%type; 
+ var_countEmp number;
+ var_countProjeto number;
+
+begin 
+ select d.DEPNUM, d.NOME, e.Nome
+into var_codDepartamento , var_nomeDepartamento, var_nomeGerente  
+from departamento d inner join empregado e
+on d.IdentEmpGer = e.IdentEmp 
+where 'RH'= d.nome;
+
+dbms_output.put_line('Código do Departamento: ' || var_codDepartamento );
+dbms_output.put_line('Nome do Departamento: ' || var_nomeDepartamento);
+dbms_output.put_line('Não localizei o projeto');
+
+
+ exception
+   when empreg then
+     dbms_output.put_line('Não localizei o empregado');
+   when projet then
+     dbms_output.put_line('Não localizei o projeto');
+END; 
+
+
+
 
 ### Patricia
 Exercício 4
