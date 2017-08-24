@@ -213,3 +213,49 @@ BEGIN
      dbms_output.put_line('Não localizei o projeto');
 END; 
 ```
+
+#### Exercicio 2
+```
+Receba como parâmetro o nome de um departamento e retorne, na forma de um relatório:
+Código do Departamento: XXX
+Nome do Departamento: XXXXXXXXXX
+Nome do Gerente: XXXXXXX
+O Departamento XXXXXX possui XXX empregados lotados nele e XXX projetos sob sua
+responsabilidade. 
+
+create or replace procedure relatorio(nome_departamento varchar2) as
+  v_depnum number;
+  v_nome_departamento departamento.nome%type;
+  v_gerente departamento.nome%type;
+begin
+  
+  select depnum, nome
+  into v_depnum, v_nome_departamento
+  from departamento
+  where nome = nome_departamento;
+  
+  dbms_output.put_line('Código do Departamento: '||v_depnum);
+  dbms_output.put_line('Nome do Departamento: '||v_nome_departamento);
+
+  select d.nome
+  into v_gerente
+  from departamento d inner join empregado e
+  on e.identemp = d.identempger
+  --where d.nome = v_nome_departamento;
+  where d.nome = 'RH';
+  
+
+  select * from departamento;
+  select * from empregado;
+
+  exception
+   when no_data_found then
+   dbms_output.put_line('Not found 404.');   
+end;
+
+
+
+begin
+  relatorio('R455H');
+end;
+```
