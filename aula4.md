@@ -24,3 +24,42 @@ teste_exception(1);
 dbms_output.put_line('finalizado com sucesso');
 end;
 ```
+
+#### 1
+```
+//Receber como parâmetro o nome de um projeto e informar, na forma de um relatório:
+Nome do projeto: XXXXXXXXXXXXXXXXX
+Código do projeto: XXXXXXX
+Nome do departamento responsável: XXXXXX
+Nome do empregado mais velho que trabalha no projeto: XXXXXXX
+
+select * from PROJETO;
+
+create or replace procedure dados_projeto(nomeproj varchar2) as nomep projeto%rowtype;
+var_exc exception;
+proj projeto%rowtype;
+
+begin
+select * into nomep 
+from projeto
+where nome = nomeproj;
+
+dbms_output.put_line('Nome do projeto: ' || nomep.NOME);
+dbms_output.put_line('Código do projeto: ' || nomep.projnum);
+
+exception
+when no_data_found then
+dbms_output.put_line('Nome nao localizado');
+RAISE_APPLICATION_ERROR(-20005, 'Valor maior que o permitido');
+end;
+
+begin
+dados_projeto('fgfgfg');
+dbms_output.put_line('finalizado com sucesso');
+end;
+
+begin
+dados_projeto('Logica de Programacao');
+dbms_output.put_line('finalizado com sucesso');
+end;
+```
