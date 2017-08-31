@@ -95,3 +95,84 @@ BEGIN
  dbms_output.put_line(total_hrs);
 end; 
 ```
+#### http://moodle.canoas.ifrs.edu.br/pluginfile.php/11656/mod_resource/content/3/exercicio_Blocos_Procedimentos-Funcoes.pdf
+
+a. Receber como parâmetro dados para a inserção de uma tupla na tabela empregado. Não
+receber o valor para identemp – essa informações será obtida a partir de consulta à base
+de dados e receber o nome do departamento, ao invés do código. Proceda com a inserção
+da informação dentro do procedimento. 
+
+```
+CREATE OR REPLACE FUNCTION consultarDep(nomeDep in varchar)
+RETURN NUMBER AS
+codDep NUMBER;
+BEGIN
+select DepNum into codDep 
+from departamento
+where nomeDep = departamento.nome;
+return codDep;
+END consultarDep;
+
+begin
+dbms_output.put_line(consultarDep('RH'));
+end;
+----------------------------------------
+CREATE OR REPLACE FUNCTION maxIdentEmp
+RETURN NUMBER AS
+var_IdentEmp NUMBER;
+BEGIN
+select max(IdentEmp)+1 into var_IdentEmp 
+from empregado;
+return var_IdentEmp;
+END maxIdentEmp;
+
+begin
+dbms_output.put_line(maxIdentEmp());
+end;
+-----------------
+CREATE OR REPLACE PROCEDURE Process_insert_emp
+    (Nome empregado.nome%type, Sal empregado.Sal%type, Ende empregado.ENDERECO%type, Sexo empregado.sexo%type, DataNasc empregado.DataNasc%type, nomeDep DEPARTAMENTO.nome%type)
+AS
+var_depNum empregado.depNum%type;
+var_IdentEmp empregado.IdentEmp%type;
+
+BEGIN
+var_depNum := consultarDep(nomeDep);
+var_IdentEmp := maxIdentEmp;
+
+insert into EMPREGADO (IdentEmp, Nome, Sal, ENDERECO, Sexo, DataNasc, DepNum) values (var_IdentEmp,Nome,Sal,Ende,Sexo,DataNasc,var_depNum );
+    dbms_output.put_line('Inserido com sucesso');
+   
+END Process_insert_emp;
+----------------------------------------
+begin
+  Process_insert_emp('Estafania', 80000,'Rua das bromelias n:123', 'F', Sysdate, 'RH');
+end;
+
+select * from empregado;
+```
+
+b. Faça uma função que receba como parâmetro o código de um empregado e o percentual
+de aumento que receberá. Proceda com a atualização do salário e retorne o valor alterado.
+```
+TERMINEAR
+CREATE OR REPLACE FUNCTION updateEmp(codEmp in number, percentualAumento in number)
+RETURN NUMBER AS
+newSalario NUMBER;
+salarioEmp number;
+BEGIN
+
+select Sal into salarioEmp 
+from empregado
+where codEmp := empregado.IdentEmp;
+newSalario := salarioEmp +  ((salarioEmp * percentualAumento)/100); 
+return newSalario;
+END updateEmp;
+
+begin
+dbms_output.put_line(consultarDep('RH'));
+end;
+
+select * from empregado;
+
+```
