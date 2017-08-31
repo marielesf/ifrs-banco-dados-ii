@@ -155,24 +155,25 @@ select * from empregado;
 b. Faça uma função que receba como parâmetro o código de um empregado e o percentual
 de aumento que receberá. Proceda com a atualização do salário e retorne o valor alterado.
 ```
-TERMINEAR
 CREATE OR REPLACE FUNCTION updateEmp(codEmp in number, percentualAumento in number)
 RETURN NUMBER AS
 newSalario NUMBER;
 salarioEmp number;
+
 BEGIN
 
 select Sal into salarioEmp 
 from empregado
-where codEmp := empregado.IdentEmp;
+where codEmp = empregado.IdentEmp;
 newSalario := salarioEmp +  ((salarioEmp * percentualAumento)/100); 
+UPDATE empregado set sal = newSalario where codEmp = IdentEmp;
 return newSalario;
 END updateEmp;
 
 begin
-dbms_output.put_line(consultarDep('RH'));
+dbms_output.put_line(updateEmp( 2, 10));
 end;
 
-select * from empregado;
+select * from empregado
 
 ```
