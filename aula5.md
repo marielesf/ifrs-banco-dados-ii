@@ -30,7 +30,7 @@ END;
 a) Faça uma função que receba como parâmetro o código de um projeto e retorne a
 quantidade de alunos que participam desse projeto. 
 
-CREATE OR REPLACE FUNCTION qtdEmpregadoProjeto(codProj number)
+CREATE OR REPLACE FUNCTION qtdEmpregadoProjeto(codProj in number)
 RETURN NUMBER AS
 qtdEmp NUMBER;
 BEGIN
@@ -44,9 +44,54 @@ END;
 
 begin
 dbms_output.put_line(qtdEmpregadoProjeto(1));
-end;
+end qtdEmpregadoProjeto;
 
 select * from projeto;
 select * from empregado;
 select * from trabalhano;
+```
+
+```
+b) Faça uma função que receba o nome de um dependente e retorne o nome do empregado
+do qual ele depende. 
+CREATE OR REPLACE FUNCTION returnNomeEmp(nomeDep in varchar2)
+RETURN varchar2 AS
+var_nomeEmp varchar2(20);
+BEGIN
+select e.nome into var_nomeEmp 
+from empregado e inner join DEPENDENTE d
+on e.IdentEmp = d.IdentEmp
+where d.nome = nomeDep;
+RETURN var_nomeEmp;
+END;
+
+begin
+dbms_output.put_line(returnNomeEmp('Laura'));
+end;
+
+select * from empregado;
+select * from DEPENDENTE;
+```
+```
+c. Faça uma função que receba o nome de um projeto e retorne a quantidade 
+total de horas trabalhadas nesse projeto. 
+
+CREATE OR REPLACE FUNCTION RETORNA_SOMA(NOMEPROJ IN VARCHAR2)
+RETURN NUMBER AS
+TOTAL_HRS NUMBER;
+BEGIN
+ SELECT SUM(HRS)
+ INTO TOTAL_HRS
+ FROM PROJETO, TRABALHANO
+ WHERE PROJETO.PROJNUM = TRABALHANO.PROJNUM
+ AND upper(PROJETO.NOME) = upper(NOMEPROJ);
+ RETURN TOTAL_HRS;
+END; 
+
+DECLARE
+ TOTAL_HRS NUMBER;
+BEGIN
+ TOTAL_HRS := RETORNA_SOMA('Banco de Dados');
+ dbms_output.put_line(total_hrs);
+end; 
 ```
