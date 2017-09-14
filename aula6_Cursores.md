@@ -37,7 +37,7 @@ BEGIN
  COMMIT;
 END; 
 ```
-#### Cursores exercicios: 
+#### Cursores exercicios simples: http://moodle.canoas.ifrs.edu.br/pluginfile.php/11760/mod_resource/content/1/exercicio_Blocos_Cursor_A.pdf 
 
 a. Receba o nome de um projeto, imprima seu código (uma única vez) e apresente os nomes
 dos empregados que trabalham nesse projeto.
@@ -121,4 +121,42 @@ end;
 begin
  empregados_departamento('2');
 end; 
+```
+
+#### Cursores exercicios Complexos: http://moodle.canoas.ifrs.edu.br/pluginfile.php/18105/mod_resource/content/2/exercicio_Blocos_Cursor_Lista1.pdf
+
+3- Faça um procedimento que receba como parâmetro o nome de um empregado e gere o seguinte
+relatório:
+<Código Empregado> – <Nome>
+ trabalhou dos Seguintes projetos:
+ <Nome do Projeto> - <HRS>
+ <Nome do Projeto> - <HRS>
+ ...  
+```
+create or replace procedure empregados_proj_hrs(codemp number) as
+cursor dadosEmp is SELECT p.nome, t.hrs 
+    FROM Projeto p, trabalhano t
+    WHERE t.IdentEmp = codemp and 
+t.ProjNum = p.ProjNum;
+
+var_cursor_dadosEmp dadosEmp%rowtype;
+var_nomeEmp empregado.nome%type;
+begin
+
+select nome
+ into var_nomeEmp 
+ from EMPREGADO
+ where IdentEmp = codemp ; 
+
+dbms_output.put_line(codemp  ||' - ' || var_nomeEmp );
+dbms_output.put_line('trabalhou dos Seguintes projetos:');
+  for var_cursor_dadosEmp in dadosEmp loop 
+   dbms_output.put_line(var_cursor_dadosEmp.nome ||' - '|| var_cursor_dadosEmp.hrs);
+ end loop;
+end; 
+
+begin
+ empregados_proj_hrs(1);
+end; 
+
 ```
