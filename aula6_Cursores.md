@@ -89,3 +89,36 @@ begin
  empregados_projeto('Banco de Dados');
 end; 
 ```
+
+b. Receba o código de um departamento e imprima todos os projetos vinculados a esse
+departamento e todos os empregados vinculados a esse departamento (informações
+separadas). 
+```
+create or replace procedure empregados_departamento(codDep number) as
+  
+cursor proj_departamento is SELECT p.nome as projNome
+    FROM PROJETO p INNER JOIN DEPARTAMENTO d ON p.DepNum = d.DepNum
+    WHERE p.DepNum = codDep;
+
+cursor emp_departamento is SELECT e.nome as EmpNome
+    FROM EMPREGADO E INNER JOIN TRABALHANO T ON E.IDENTEMP = T.IDENTEMP
+    INNER JOIN PROJETO P ON T.PROJNUM = P.PROJNUM
+    WHERE p.projnum = codDep;
+
+  var_cursorProjDep proj_departamento%rowtype;
+  var_cursorEmpDep emp_departamento%rowtype;
+
+begin
+ for var_cursorProjDep in proj_departamento loop 
+   dbms_output.put_line(var_cursorProjDep.projNome);
+ end loop;
+
+ for var_cursorEmpDep in emp_departamento loop 
+   dbms_output.put_line(var_cursorEmpDep.empNome);
+ end loop;
+end; 
+
+begin
+ empregados_departamento('2');
+end; 
+```
