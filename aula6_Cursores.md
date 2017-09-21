@@ -131,7 +131,7 @@ relatório:
  trabalhou dos Seguintes projetos:
  <Nome do Projeto> - <HRS>
  <Nome do Projeto> - <HRS>
- ...  
+   
 ```
 create or replace procedure empregados_proj_hrs(codemp number) as
 cursor dadosEmp is SELECT p.nome, t.hrs 
@@ -159,4 +159,91 @@ begin
  empregados_proj_hrs(1);
 end; 
 
+```
+
+3. Faça um procedimento que receba como parâmetro o nome de um empregado 
+e gere o seguinte relatório:
+<Código Empregado> – <Nome>
+ trabalhou dos Seguintes projetos:
+ <Nome do Projeto> - <HRS>
+ <Nome do Projeto> - <HRS>
+ <Nome do Projeto> - <HRS>
+ 
+ ```
+CREATE OR REPLACE PROCEDURE EX_3(NOMEEMP VARCHAR2) AS
+   VAR_COD NUMBER;
+   cursor dados is 
+     SELECT P.NOME, T.HRS
+     FROM EMPREGADO1 E, TRABALHANO T, PROJETO P
+     WHERE E.IDENTEMP = T.IDENTEMP AND T.PROJNUM = P.PROJNUM
+       AND E.NOME = nomeemp;
+   var_dados dados%rowtype;
+BEGIN
+   SELECT IDENTEMP
+   INTO VAR_COD
+   FROM EMPREGADO1
+   WHERE NOME = NOMEEMP;
+   DBMS_OUTPUT.PUT_LINE(VAR_COD || ' - ' || NOMEEMP);
+   DBMS_OUTPUT.PUT_LINE('trabalhou nos seguintes projetos:');
+   for var_dados in dados loop
+     dbms_output.put_line(var_dados.nome || ' - '|| var_dados.HRS);
+   end loop; 
+END; 
+
+BEGIN
+ EX_3('Auria');
+end;
+   
+   SELECT * FROM EMPREGADO1
+   SELECT * FROM TRABALHANO
+  ``` 
+   
+4. Faça uma função que receba como parâmetro o número de um departamento. 
+Gere o seguinte relatório:
+<Nome Departamento >
+ Quantidade de projetos: <XXX>
+ Funcionários alocados no departamento:
+ <Nome Funcionario>
+ <Nome Funcionario>
+Retorne, a quantidade total de funcionários alocados. 
+  
+```
+CREATE OR REPLACE FUNCTION EX_4(CODDEP NUMBER) RETURN NUMBER AS
+  NOMEDEP DEPARTAMENTO1.NOME%TYPE; 
+  QUANTIDADE NUMBER; 
+  CURSOR DADOS_EMP IS
+   SELECT E.NOME
+   FROM EMPREGADO1 E INNER JOIN DEPARTAMENTO1 D ON E.DEPNUM = D.DEPNUM
+   WHERE D.DEPNUM = CODDEP;
+  VAR_DADOS DADOS_EMP%ROWTYPE; 
+BEGIN
+ SELECT NOME
+ INTO NOMEDEP
+ FROM DEPARTAMENTO1
+ WHERE DEPNUM = CODDEP; 
+ DBMS_OUTPUT.PUT_LINE(NOMEDEP); 
+ SELECT COUNT(*)
+ INTO QUANTIDADE
+ FROM PROJETO
+ WHERE DEPNUM = CODDEP; 
+ DBMS_OUTPUT.PUT_LINE('Quantidade de projetos: '||QUANTIDADE); 
+ DBMS_OUTPUT.PUT_LINE('Funcionários alocados no departamento:');
+ QUANTIDADE := 0;
+ OPEN DADOS_EMP;
+ LOOP
+  FETCH DADOS_EMP INTO VAR_DADOS;
+  EXIT WHEN DADOS_EMP%NOTFOUND;
+  DBMS_OUTPUT.PUT_LINE(VAR_DADOS.NOME);
+  QUANTIDADE := QUANTIDADE +1; 
+ END LOOP;
+ CLOSE DADOS_EMP; 
+ RETURN(QUANTIDADE); 
+END; 
+  
+DECLARE
+ QUANT NUMBER;
+BEGIN
+ QUANT := EX_4(1);
+ DBMS_OUTPUT.PUT_LINE('Quantidade de funcionarios alocados: '||quant);
+END; 
 ```
