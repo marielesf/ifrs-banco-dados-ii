@@ -113,5 +113,55 @@ begin
  empregados_projeto(10);
  dbms_output.put_line('Ao todo, já foram vendidas: '||qtdToalItenVendido(10) ||' unidades deste produto.');
 end; 
- 
 ```
+3. Faça um procedimento que receba como parâmetro de entrada o tipo de um produto (código) e imprima:
+Nome do Tipo de Produto: XXXX
+Produtos desse tipo:
+* Nome do Produto: XXXXX – Comercializado em:
+- Número da Venda: XXX – Data da Venda: XX/XX/XXXX – Quantidade Vendida: XXXX
+- Número da Venda: XXX – Data da Venda: XX/XX/XXXX – Quantidade Vendida: XXXX
+...
+* Nome do Produto: XXXXX – Comercializado em:
+- Número da Venda: XXX – Data da Venda: XX/XX/XXXX – Quantidade Vendida: XXXX
+- Número da Venda: XXX – Data da Venda: XX/XX/XXXX – Quantidade Vendida: XXXX
+...
+
+```
+create or replace procedure dados_produto(CodTipoProd number) as
+  
+cursor c_produto is SELECT p.DescricaoProd, venda2.NumeroNF, venda2.DATAVENDA, i.QTDEITEM
+    FROM produto p, venda2, ItemVenda i
+    WHERE p.CodigoTipoProd = CodTipoProd AND
+    p.NumeroProd = i.NumeroProd AND 
+    i.NumeroNF = venda2.NumeroNF;
+
+  var_cursorProd c_produto%rowtype;
+  var_nomeTipoProduto produto.DESCRICAOPROD%type;
+begin
+select DescricaoTipoProd
+ into var_nomeTipoProduto 
+ from TipoProd p
+ where p.CodigoTipoProd= CodTipoProd ; 
+ dbms_output.put_line('Nome do Tipo de Produto: '||var_nomeTipoProduto);
+
+ for var_cursorProd in c_produto loop 
+   dbms_output.put_line('*Nome do Produto: ' || var_cursorProd.DescricaoProd ||' – Comercializado em: ');
+   dbms_output.put_line('-Número da Venda: '||var_cursorProd.NumeroNF|| ' – Data da Venda:  '||var_cursorProd.DataVenda||' – Quantidade Vendida:'|| var_cursorProd.QtdeItem);
+ end loop;
+end; 
+
+begin
+ dados_produto(21);
+end; 
+```
+4. Faça uma função que receba como parâmetro de entrada o nome de um empregado e retorne o
+nome do departamento no qual ele está alocado – imprima essa informação no bloco chamador.
+Dentro da função imprima:
+Nomes dos demais empregados que trabalham com ele:
+XXXXXX
+XXXXXX
+....
+Vendas e datas das vendas que ele realizou:
+Venda_XXXXX – Data_XX/XX/XXXX
+Venda_XXXXX – Data_XX/XX/XXXX
+
