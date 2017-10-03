@@ -165,3 +165,48 @@ Vendas e datas das vendas que ele realizou:
 Venda_XXXXX – Data_XX/XX/XXXX
 Venda_XXXXX – Data_XX/XX/XXXX
 
+```
+CREATE OR REPLACE FUNCTION function_DepartamentoEmpregado(NOME IN VARCHAR2)
+RETURN VARCHAR2 AS
+var_nomeDEP VARCHAR2(30);
+
+cursor demais_emp is 
+SELECT e.NOMEEMP as outrosEmpregados
+    FROM DEPARTAMENTO2  d INNER JOIN empregado2 e ON d.CODDEPT = e.CODDEPT
+    WHERE e.NomeEmp = NOME ;
+
+cursor emp_vendas is 
+SELECT v.NumeroNF, v.DataVenda as NumeroNF, dataVenda
+    FROM EMPREGADO2 E INNER JOIN Venda2 v ON E.CODEMP = v.CODEMP
+    WHERE e.NomeEmp = NOME;
+
+  var_cursorEmpDep demais_emp%rowtype;
+  cursorempVendas emp_vendas%rowtype;
+
+BEGIN
+select d.NomeDepartamento into var_nomeDEP
+from Departamento2 d, empregado2 e
+where d.CODDEPT= e.CODDEPT and 
+e.NomeEmp = NOME;
+
+dbms_output.put_line('Nomes dos demais empregados que trabalham com ele: ');
+ for var_cursorEmpDep in demais_emp loop 
+   dbms_output.put_line(var_cursorEmpDep.outrosEmpregados);
+ end loop;
+
+dbms_output.put_line('Vendas e datas das vendas que ele realizou: ');
+ for var_cursorempVendas in emp_vendas loop 
+   dbms_output.put_line('Venda_'||var_cursorempVendas.NumeroNF||'–Data_'||var_cursorempVendas.dataVenda);
+ end loop;
+
+RETURN var_nomeDEP;
+END;
+
+begin
+dbms_output.put_line(function_DepartamentoEmpregado('Patricia'));
+end function_DepartamentoEmpregado;
+
+select * from Departamento2; 
+select * from empregado2; 
+select * from venda2;
+```
