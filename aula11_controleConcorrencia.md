@@ -46,3 +46,32 @@ Erro de SQL: ORA-00060: conflito detectado ao aguardar recurso
 *Action:   Look at the trace file to see the transactions and resources
            involved. Retry if necessary.
 ''''
+2
+1- Lock bem-sucedido.
+Apos o commit.
+
+2- Erro a partir da linha : 1 no comando -
+LOCK TABLE t IN EXCLUSIVE MODE NOWAIT
+Relatório de erros -
+Erro de SQL: ORA-00054: o recurso está ocupado e é obtido com o NOWAIT especificado
+00054. 00000 -  "resource busy and acquire with NOWAIT specified or timeout expired"
+*Cause:    Interested resource is busy.
+*Action:   Retry if necessary or increase timeout.
+
+3- Mostra erro: Erro a partir da linha : 1 no comando -
+LOCK TABLE t IN EXCLUSIVE MODE NOWAIT
+Relatório de erros -
+Erro de SQL: ORA-00054: o recurso está ocupado e é obtido com o NOWAIT especificado
+00054. 00000 -  "resource busy and acquire with NOWAIT specified or timeout expired"
+*Cause:    Interested resource is busy.
+*Action:   Retry if necessary or increase timeout.
+Commit concluído.
+Erro a partir da linha : 1 no comando -
+LOCK TABLE t IN EXCLUSIVE MODE NOWAIT
+Relatório de erros -
+Erro de SQL: ORA-00054: o recurso está ocupado e é obtido com o NOWAIT especificado
+00054. 00000 -  "resource busy and acquire with NOWAIT specified or timeout expired"
+*Cause:    Interested resource is busy.
+*Action:   Retry if necessary or increase timeout.
+
+B- Insert Concluido.
